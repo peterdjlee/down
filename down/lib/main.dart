@@ -1,4 +1,3 @@
-import 'package:down/pages/add_class_page.dart';
 import 'package:down/colors.dart';
 import 'package:down/pages/feed_page.dart';
 import 'package:flutter/material.dart';

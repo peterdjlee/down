@@ -66,7 +66,13 @@ class AddClassPage extends StatelessWidget {
 
       if (picked != null) {
         _time = picked;
-        String minute = _time.minute == 0 ? '00' : _time.minute.toString();
+        String minute;
+        if (_time.minute < 10) {
+          minute = '0$_time.minute';
+        } else {
+          minute = _time.minute.toString();
+        }
+
         String period = _time.hour > 12 ? 'PM' : 'AM';
         _timeController.text = '${_time.hourOfPeriod.toString()}:$minute $period';
       }
@@ -156,46 +162,44 @@ class AddClassPage extends StatelessWidget {
                   ),
                 ),
 
-                IconButton(
-                  color: Colors.black,
-                  icon: Icon(Icons.calendar_today),
-                  onPressed: () {
-                    _selectDate(context);
-                    _selectTime(context);
-                  },
-                ),
+                SizedBox(width: 16.0),
 
                 Flexible(
                   child: PrimaryColorOverride(
                     color: downSalmon,
                     child: TextFormField(
-                      enabled: false,
                       controller: _dateController,
                       decoration: InputDecoration(
-                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-                         labelText: 'Date',
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.calendar_today),
+                          onPressed: () {
+                            _selectDate(context);
+                          },
+                          
+                        ),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                        labelText: 'Date',
                       ),
                     ),
                   ),
                 ),
 
-                IconButton(
-                  color: Colors.black,
-                  icon: Icon(Icons.access_time),
-                  onPressed: () {
-                    _selectTime(context);
-                  },
-                ),
+                SizedBox(width: 16.0),
 
                 Flexible(
                   child: PrimaryColorOverride(
                     color: downSalmon,
                     child: TextFormField(
-                      enabled: false,
                       controller: _timeController,
                       decoration: InputDecoration(
-                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-                         labelText: 'Time',
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.access_time),
+                          onPressed: () {
+                            _selectTime(context);
+                          }
+                        ),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+                        labelText: 'Time',
                       ),
                     ),
                   ),
@@ -205,58 +209,46 @@ class AddClassPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ButtonTheme(
-                minWidth: double.infinity,
-                height: 64.0,
-                child: RaisedButton(
-                  // borderSide: BorderSide(color: Colors.black, width: 5.0),
-                  shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
+      bottomNavigationBar: ButtonTheme(
+              minWidth: double.infinity,
+              height: 64.0,
+              child: FlatButton(
+                color: downPink,
+                // borderSide: BorderSide(color: Colors.black, width: 5.0),
+                child: Text(
+                  'SUBMIT',
+                  style: TextStyle(
+                    fontSize: 24.0,
                   ),
-                  child: Text(
-                    'SUBMIT',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                    ),
-                  ),
-                  onPressed: () {
-                    Map<String, Object> org = new Map<String, Object>();
-
-                    String title = _titleController.text;
-                    String instructor = _instructorController.text;
-                    String location = _locationController.text;
-                    int price = int.parse(_priceController.text);
-                    String date = _dateController.text;
-                    String time = _timeController.text;
-                    String documentID = title.toLowerCase().replaceAll(' ', '')
-                    + instructor.toLowerCase().replaceAll(' ', '')
-                    + location.toLowerCase().replaceAll(' ', '')
-                    + price.toString();
-
-                    org = {'title' : title, 
-                    'instructor' : instructor,
-                    'location' : location, 
-                    'price' : price,
-                    'date' : date,
-                    'time' : time
-                    };
-
-                    Firestore.instance.collection('classes').document(documentID).setData(org,);
-
-                    _titleController.clear();
-                    _instructorController.clear();
-                    _locationController.clear();
-                    _priceController.clear();
-                    _dateController.clear();
-                    _timeController.clear();
-
-                    Navigator.pop(context);
-                  },
                 ),
+                onPressed: () {
+                  Map<String, Object> org = new Map<String, Object>();
+
+                  String title = _titleController.text;
+                  String instructor = _instructorController.text;
+                  String location = _locationController.text;
+                  int price = int.parse(_priceController.text);
+                  String date = _dateController.text;
+                  String time = _timeController.text;
+                  String documentID = title.toLowerCase().replaceAll(' ', '')
+                  + instructor.toLowerCase().replaceAll(' ', '')
+                  + location.toLowerCase().replaceAll(' ', '')
+                  + price.toString();
+
+                  org = {'title' : title, 
+                  'instructor' : instructor,
+                  'location' : location, 
+                  'price' : price,
+                  'date' : date,
+                  'time' : time
+                  };
+
+                  Firestore.instance.collection('classes').document(documentID).setData(org);
+
+                  Navigator.pop(context);
+                },
               ),
-      ),
+            ),
     );
   }
 }

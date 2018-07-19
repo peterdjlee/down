@@ -6,11 +6,49 @@ import 'package:down/pages/profile_page.dart';
 import 'package:down/pages/search_page.dart';
 import 'package:flutter/material.dart';
 
-class BottomBar extends StatelessWidget {
-  final String page = '';
+import 'package:fluro/fluro.dart';
 
-  BottomBar({String page}) {
-    print(page);
+class BottomBar extends StatelessWidget {
+
+  final router = new Router();
+  var feedHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return new FeedPage();
+    }
+  );
+  var searchHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return new SearchPage();
+    }
+  );
+  var addClassHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return new AddClassPage();
+    }
+  );
+  var communityHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return new CommunityPage();
+    }
+  );
+  var profileHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return new ProfilePage();
+    }
+  );
+
+  void defineRoutes(Router router) {
+    router.define("/FeedPage", handler: feedHandler);
+    router.define("/SearchPage", handler: searchHandler);
+    router.define("/AddClassPage", handler: addClassHandler);
+    router.define("/CommunityPage", handler: communityHandler);
+    router.define("/ProfilePage", handler: profileHandler);
+  }
+
+  String page = '';
+
+  BottomBar({this.page}) {
+    defineRoutes(router);
   }
 
   @override
@@ -24,18 +62,21 @@ class BottomBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               new IconButton(
-                  icon: Icon(
-                    Icons.home,
-                    size: 30.0,
-                    color: page != 'FeedPage' ? downPink : Colors.black,
-                  ),
-                  onPressed: () {
-                    if (page != 'FeedPage') Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (BuildContext context) => FeedPage())
+                icon: Icon(
+                  Icons.home,
+                  size: 30.0,
+                  color: page == 'FeedPage' ? downPink : Colors.black,
+                ),
+                onPressed: () {
+                  if (page != 'FeedPage') {
+                    Navigator.pop(context);
+                    router.navigateTo(
+                      context, 
+                      "/FeedPage",
+                      transition: TransitionType.fadeIn
                     );
-                  },
+                  }
+                }
               ),
               new IconButton(
                 icon: Icon(
@@ -46,10 +87,11 @@ class BottomBar extends StatelessWidget {
                 onPressed: () {
                   if (page != 'SearchPage') {
                     if (page != 'FeedPage') Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (BuildContext context) => SearchPage())
-                   );
+                    router.navigateTo(
+                      context, 
+                      "/SearchPage",
+                      transition: TransitionType.fadeIn
+                    );
                   }
                 },
               ),
@@ -59,9 +101,10 @@ class BottomBar extends StatelessWidget {
                   size: 30.0,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (BuildContext context) => AddClassPage())
+                  router.navigateTo(
+                    context, 
+                    "/AddClassPage",
+                    transition: TransitionType.fadeIn
                   );
                 },
               ),
@@ -74,9 +117,10 @@ class BottomBar extends StatelessWidget {
                 onPressed: () {
                   if (page != 'CommunityPage') {
                     if (page != 'FeedPage') Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (BuildContext context) => CommunityPage())
+                    router.navigateTo(
+                      context, 
+                      "/CommunityPage",
+                      transition: TransitionType.fadeIn
                     );
                   }
                 },
@@ -90,9 +134,10 @@ class BottomBar extends StatelessWidget {
                 onPressed: () {
                   if (page != 'ProfilePage') {
                     if (page != 'FeedPage') Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (BuildContext context) => ProfilePage())
+                    router.navigateTo(
+                      context, 
+                      "/ProfilePage",
+                      transition: TransitionType.fadeIn
                     );
                   }
                 },
