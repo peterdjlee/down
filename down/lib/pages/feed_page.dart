@@ -1,4 +1,5 @@
 import 'package:down/bottom_bar.dart';
+import 'package:down/pages/class_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,15 +22,15 @@ class FeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: topBar,
-      body: Container(
-        child: Center(
-          child: Text(
-            'FeedPage'
-          )
-        ),
+      body: GridView.count(
+        crossAxisCount: 1,
+        padding: EdgeInsets.all(16.0),
+        childAspectRatio: 8.0 / 9.0,
+        children: <Widget>[
+          ClassCard('exampleclass')
+          ],
       ),
       bottomNavigationBar: BottomBar(page: 'FeedPage'),
     );

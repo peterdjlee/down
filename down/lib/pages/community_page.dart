@@ -21,7 +21,6 @@ class CommunityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: topBar,
       body: Container(
