@@ -1,37 +1,59 @@
 import 'package:down/bottom_bar.dart';
-import 'package:down/pages/class_card.dart';
+import 'package:down/class_list.dart';
+import 'package:down/pages/add_class_page.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FeedPage extends StatelessWidget {
 
-  final topBar = AppBar(
-    centerTitle: true,
-    backgroundColor: Color(0xffFF9391),
-    elevation: 1.0,
-    title: Text(
-        'Down',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 20.0,
-        )
-    ),
+  final router = new Router();
+  final addClassHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return new AddClassPage();
+    }
   );
+
+  void defineRoutes(Router router) {
+    router.define("/AddClassPage", handler: addClassHandler);
+  }
+
+  FeedPage() {
+    defineRoutes(router);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: topBar,
-      body: GridView.count(
-        crossAxisCount: 1,
-        padding: EdgeInsets.all(16.0),
-        childAspectRatio: 8.0 / 9.0,
-        children: <Widget>[
-          ClassCard('exampleclass')
-          ],
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Color(0xffFF9391),
+        elevation: 1.0,
+        title: Text(
+          'Down',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+          )
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.add_circle_outline,
+              size: 30.0,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              router.navigateTo(
+                context, 
+                "/AddClassPage",
+                transition: TransitionType.fadeIn
+              );
+            },
+          )
+        ] 
       ),
+      body: ClassList('exampleclass'),
       bottomNavigationBar: BottomBar(page: 'FeedPage'),
     );
   }

@@ -63,53 +63,6 @@ class BottomBar extends StatelessWidget {
             children: <Widget>[
               new IconButton(
                 icon: Icon(
-                  Icons.home,
-                  size: 30.0,
-                  color: page == 'FeedPage' ? downPink : Colors.black,
-                ),
-                onPressed: () {
-                  if (page != 'FeedPage') {
-                    Navigator.pop(context);
-                    router.navigateTo(
-                      context, 
-                      "/FeedPage",
-                      transition: TransitionType.fadeIn
-                    );
-                  }
-                }
-              ),
-              new IconButton(
-                icon: Icon(
-                  Icons.search,
-                  size: 30.0,
-                  color: page == 'SearchPage' ? downPink : Colors.black,
-                ),
-                onPressed: () {
-                  if (page != 'SearchPage') {
-                    if (page != 'FeedPage') Navigator.pop(context);
-                    router.navigateTo(
-                      context, 
-                      "/SearchPage",
-                      transition: TransitionType.fadeIn
-                    );
-                  }
-                },
-              ),
-              new IconButton(
-                icon: Icon(
-                  Icons.add_circle_outline,
-                  size: 30.0,
-                ),
-                onPressed: () {
-                  router.navigateTo(
-                    context, 
-                    "/AddClassPage",
-                    transition: TransitionType.fadeIn
-                  );
-                },
-              ),
-              new IconButton(
-                icon: Icon(
                   Icons.people_outline,
                   size: 30.0,
                   color: page == 'CommunityPage' ? downPink : Colors.black,
@@ -124,6 +77,18 @@ class BottomBar extends StatelessWidget {
                     );
                   }
                 },
+              ),
+              new IconButton(
+                icon: Icon(
+                  Icons.home,
+                  size: 30.0,
+                  color: page == 'FeedPage' ? downPink : Colors.black,
+                ),
+                onPressed: () {
+                  if (page != 'FeedPage') {
+                    Navigator.pop(context);
+                  }
+                }
               ),
               new IconButton(
                 icon: Icon(
