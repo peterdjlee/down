@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:down/colors.dart';
 import 'package:down/pages/class_page.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
@@ -23,89 +24,117 @@ class ClassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 184.0,
-                child: new Stack(
-                  children: <Widget>[
-                    new Positioned.fill(
-                      child: new Image.asset(
-                        'assets/carmen-synergy.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: FlatButton(
+        child: Card(
+          elevation: 0.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 184.0,
+                  child: new Stack(
                     children: <Widget>[
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
-                        child: new Text(
-                          documentSnapshot['title'],
-                          style: TextStyle(
-                            fontSize: 24.0,
-                            color: Colors.black
-                          ),
-                        )
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Flexible(
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    documentSnapshot['instructor'],
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        color: Colors.black54
-                                      ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: 6.0,),
-                          ],
+                      new Positioned.fill(
+                        child: new Image.asset(
+                          'assets/images/carmen-synergy.jpg',
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            '\$${documentSnapshot['price'].toString()}',
-                            style: TextStyle(
-                              fontSize: 17.5,
-                              color: Colors.black
-                            ),
-                          ),
-                        ],
-                      )
                     ],
                   ),
                 ),
-              )
-            ],
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: downSalmon,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15.0),
+                      bottomRight: Radius.circular(15.0),
+                    )
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 16.0, left: 16.0, right: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // FittedBox(
+                        //   fit: BoxFit.scaleDown,
+                        //   alignment: Alignment.centerLeft,
+                        //   child: new Text(
+                        //     documentSnapshot['title'],
+                        //     style: TextStyle(
+                        //       fontSize: 24.0,
+                        //       color: Colors.black
+                        //     ),
+                        //   )
+                        // ),
+                        Text(
+                          documentSnapshot['title'],
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Flexible(
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(
+                                      documentSnapshot['instructor'],
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        color: Colors.black
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 6.0),
+                              Text(
+                                '${documentSnapshot['startTime']} ~ ${documentSnapshot['endTime']}',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.black
+                                ),
+                              )
+                            ],
+                          )
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              '\$${documentSnapshot['price'].toString()}',
+                              style: TextStyle(
+                                fontSize: 17.5,
+                                color: Colors.black
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      onPressed: () {
-        router.navigateTo(
-          context, 
-          "/ClassPage",
-          transition: TransitionType.fadeIn
-        );
-      },
+        onPressed: () {
+          router.navigateTo(
+            context,
+            "/ClassPage",
+            transition: TransitionType.fadeIn
+          );
+        },
+      ),
     );
   }
 }

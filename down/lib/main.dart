@@ -51,7 +51,7 @@ TextTheme _buildDownTextTheme(TextTheme base) {
       fontSize: 14.0,
     ),
   ).apply(
-    // fontFamily: 'Rubik',
+    fontFamily: 'OpenSans',
     // displayColor: downSalmon,
     // bodyColor: downSalmon,
   );

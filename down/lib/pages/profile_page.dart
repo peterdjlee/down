@@ -9,7 +9,7 @@ class ProfilePage extends StatelessWidget {
     backgroundColor: Color(0xffFF9391),
     elevation: 1.0,
     title: Text(
-        'Down',
+        'DOWN',
         style: TextStyle(
           color: Colors.black,
           fontSize: 20.0,

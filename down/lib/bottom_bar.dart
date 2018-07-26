@@ -53,63 +53,58 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Colors.white,
-        height: 50.0,
-        alignment: Alignment.center,
-        child: new BottomAppBar(
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              new IconButton(
-                icon: Icon(
-                  Icons.people_outline,
-                  size: 30.0,
-                  color: page == 'CommunityPage' ? downPink : Colors.black,
-                ),
-                onPressed: () {
-                  if (page != 'CommunityPage') {
-                    if (page != 'FeedPage') Navigator.pop(context);
-                    router.navigateTo(
-                      context, 
-                      "/CommunityPage",
-                      transition: TransitionType.fadeIn
-                    );
-                  }
-                },
-              ),
-              new IconButton(
-                icon: Icon(
-                  Icons.home,
-                  size: 30.0,
-                  color: page == 'FeedPage' ? downPink : Colors.black,
-                ),
-                onPressed: () {
-                  if (page != 'FeedPage') {
-                    Navigator.pop(context);
-                  }
-                }
-              ),
-              new IconButton(
-                icon: Icon(
-                  Icons.person_outline,
-                  size: 30.0,
-                  color: page == 'ProfilePage' ? downPink : Colors.black,
-                ),
-                onPressed: () {
-                  if (page != 'ProfilePage') {
-                    if (page != 'FeedPage') Navigator.pop(context);
-                    router.navigateTo(
-                      context, 
-                      "/ProfilePage",
-                      transition: TransitionType.fadeIn
-                    );
-                  }
-                },
-              ),
-            ],
+    return BottomAppBar(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          IconButton(
+          icon: Icon(
+            Icons.people_outline,
+            size: 30.0,
+            color: page == 'CommunityPage' ? downPink : Colors.black,
           ),
-        ),
-      );
+          onPressed: () {
+            if (page != 'CommunityPage') {
+              if (page != 'FeedPage') Navigator.pop(context);
+              router.navigateTo(
+                context, 
+                "/CommunityPage",
+                transition: TransitionType.fadeIn
+              );
+            }
+          },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.home,
+              size: 30.0,
+              color: page == 'FeedPage' ? downPink : Colors.black,
+            ),
+            onPressed: () {
+              if (page != 'FeedPage') {
+                Navigator.pop(context);
+              }
+            }
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.person_outline,
+              size: 30.0,
+              color: page == 'ProfilePage' ? downPink : Colors.black,
+            ),
+            onPressed: () {
+              if (page != 'ProfilePage') {
+                if (page != 'FeedPage') Navigator.pop(context);
+                router.navigateTo(
+                  context, 
+                  "/ProfilePage",
+                  transition: TransitionType.fadeIn
+                );
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
