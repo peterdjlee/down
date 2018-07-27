@@ -42,6 +42,34 @@ class ClassCard extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
+                      Positioned(
+                        top: 0.0,
+                        left: 0.0,
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: downSalmon,
+                              border: Border.all(
+                                color: downSalmon,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(15.0)
+                              )
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                documentSnapshot['organization'],
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.black
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -57,7 +85,7 @@ class ClassCard extends StatelessWidget {
                     )
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 16.0, left: 16.0, right: 16.0),
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -82,6 +110,21 @@ class ClassCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                documentSnapshot['date'],
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.black
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Flexible(
@@ -90,7 +133,7 @@ class ClassCard extends StatelessWidget {
                                     Text(
                                       documentSnapshot['instructor'],
                                       style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 14.0,
                                         color: Colors.black
                                       ),
                                     ),
@@ -101,7 +144,7 @@ class ClassCard extends StatelessWidget {
                               Text(
                                 '${documentSnapshot['startTime']} ~ ${documentSnapshot['endTime']}',
                                 style: TextStyle(
-                                  fontSize: 15.0,
+                                  fontSize: 14.0,
                                   color: Colors.black
                                 ),
                               )
@@ -128,11 +171,19 @@ class ClassCard extends StatelessWidget {
             ),
           ),
         onPressed: () {
-          router.navigateTo(
+          Navigator.push(
             context,
-            "/ClassPage",
-            transition: TransitionType.fadeIn
+            MaterialPageRoute(
+              builder: (context) => ClassPage(
+                documentSnapshot: documentSnapshot,
+              )
+            )
           );
+          // router.navigateTo(
+          //   context,
+          //   "/ClassPage",
+          //   transition: TransitionType.fadeIn
+          // );
         },
       ),
     );

@@ -14,7 +14,7 @@ class ClassPage extends StatelessWidget {
         backgroundColor: Color(0xffFF9391),
         elevation: 1.0,
         title: Text(
-          documentSnapshot['title'],
+          'DOWN',
           style: TextStyle(
             color: Colors.black,
             fontSize: 20.0,
@@ -24,7 +24,7 @@ class ClassPage extends StatelessWidget {
       body: Container(
         child: Center(
           child: Text(
-            'ClassPage'
+            documentSnapshot['title'],
           )
         ),
       ),
