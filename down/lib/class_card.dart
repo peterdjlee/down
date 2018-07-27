@@ -85,21 +85,10 @@ class ClassCard extends StatelessWidget {
                     )
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 16.0, left: 16.0, right: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // FittedBox(
-                        //   fit: BoxFit.scaleDown,
-                        //   alignment: Alignment.centerLeft,
-                        //   child: new Text(
-                        //     documentSnapshot['title'],
-                        //     style: TextStyle(
-                        //       fontSize: 24.0,
-                        //       color: Colors.black
-                        //     ),
-                        //   )
-                        // ),
                         Text(
                           documentSnapshot['title'],
                           style: TextStyle(
@@ -110,46 +99,43 @@ class ClassCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
                                 documentSnapshot['date'],
                                 style: TextStyle(
                                   fontSize: 14.0,
-                                  color: Colors.black
+                                  color: Colors.black54
                                 ),
                               )
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Flexible(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      documentSnapshot['instructor'],
-                                      style: TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.black
-                                      ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    documentSnapshot['instructor'],
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.black
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 6.0),
-                              Text(
-                                '${documentSnapshot['startTime']} ~ ${documentSnapshot['endTime']}',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.black
-                                ),
-                              )
-                            ],
-                          )
+                            ),
+                            SizedBox(width: 6.0),
+                            Text(
+                              '${documentSnapshot['startTime']} ~ ${documentSnapshot['endTime']}',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black
+                              ),
+                            )
+                          ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
