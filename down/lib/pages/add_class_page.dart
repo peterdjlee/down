@@ -45,20 +45,21 @@ class AddClassPageState extends State<AddClassPage> {
   final TextEditingController _locationController = new TextEditingController();
   final TextEditingController _priceController = new TextEditingController();
 
-  List<TextEditingController> _instructorControllerList =
+  List<TextEditingController> instructorControllerList =
       new List.generate(1, (_) => new TextEditingController());
 
-  final FocusNode _instructorFocusNode = new FocusNode();
   final FocusNode _locationFocusNode = new FocusNode();
   final FocusNode _priceFocusNode = new FocusNode();
-
-  List<String> instructorList = new List<String>();
 
   int instructorListLength = 2;
 
   DateTime _date = new DateTime.now();
-  TimeOfDay _startTime = new TimeOfDay.now();
-  TimeOfDay _endTime = new TimeOfDay.now();
+
+  List<TimeOfDay> startTimeList =
+      new List.generate(1, (_) => new TimeOfDay(hour: TimeOfDay.now().hour, minute: 00,));
+
+  List<TimeOfDay> endTimeList = 
+      new List.generate(1, (_) => new TimeOfDay(hour: TimeOfDay.now().hour, minute: 30,));
 
   @override
   Widget build(BuildContext context) {
@@ -161,9 +162,7 @@ class AddClassPageState extends State<AddClassPage> {
                                   top: 8.0,
                                 ),
                                 child: TextField(
-                                  controller: _instructorController,
-                                  focusNode: _instructorFocusNode,
-                                  onSubmitted: (String value) {},
+                                  controller: instructorControllerList[index],
                                   decoration: InputDecoration(
                                     icon: Icon(
                                       Icons.person_outline,
@@ -180,16 +179,16 @@ class AddClassPageState extends State<AddClassPage> {
                                     top: 17.0,
                                     bottom: 16.0),
                                 child: DateTimePicker(
-                                  selectedStartTime: _startTime,
-                                  selectedEndTime: _endTime,
+                                  selectedStartTime: startTimeList[index],
+                                  selectedEndTime: endTimeList[index],
                                   selectStartTime: (TimeOfDay time) {
                                     setState(() {
-                                      _startTime = time;
+                                      startTimeList[index] = time;
                                     });
                                   },
                                   selectEndTime: (TimeOfDay time) {
                                     setState(() {
-                                      _endTime = time;
+                                      endTimeList[index] = time;
                                     });
                                   },
                                   isDate: false,
@@ -205,12 +204,30 @@ class AddClassPageState extends State<AddClassPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             IconButton(
-                              icon: Icon(Icons.person_add),
+                              icon: Icon(Icons.remove),
                               iconSize: 30.0,
                               color: Colors.black12,
                               onPressed: () {
+                                if (instructorListLength != 2) {
+                                  setState(() {
+                                    instructorListLength--;
+                                    instructorControllerList.removeLast();
+                                    startTimeList.removeLast();
+                                    endTimeList.removeLast();
+                                  });
+                                }
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.person_add),
+                              iconSize: 30.0,
+                              color: Colors.black26,
+                              onPressed: () {
                                 setState(() {
                                   instructorListLength++;
+                                  instructorControllerList.add(new TextEditingController());
+                                  startTimeList.add(endTimeList[index - 1]);
+                                  endTimeList.add(newTime(endTimeList[index - 1]));
                                 });
                               },
                             )
@@ -246,26 +263,32 @@ class AddClassPageState extends State<AddClassPage> {
             String date = '';
             date = new DateFormat("yMd").format(_date).toString();
 
-            // Format conversion for time
-            String minute;
-            if (_startTime.minute < 10) {
-              minute = '0${_startTime.minute}';
-            } else {
-              minute = _startTime.minute.toString();
-            }
-            String period = _startTime.hour > 12 ? 'PM' : 'AM';
-            String startTime =
-                '${_startTime.hourOfPeriod.toString()}:$minute $period';
+            List<String> startTimeStringList = new List<String>();
+            String minute, period, startTime, endTime;
+            for (var i = 0; i < startTimeList.length; i++) {
+              if (startTimeList[i].minute < 10) {
+                minute = '0${startTimeList[i].minute}';
+              } else {
+                minute = startTimeList[i].minute.toString();
+              }
+              period = startTimeList[i].hour > 12 ? 'PM' : 'AM';
+              startTime = '${startTimeList[i].hourOfPeriod.toString()}:$minute $period';
 
-            if (_endTime.minute < 10) {
-              minute = '0${_endTime.minute}';
-            } else {
-              minute = _endTime.minute.toString();
+              startTimeStringList.add(startTime);
             }
-            period = _endTime.hour > 12 ? 'PM' : 'AM';
-            String endTime =
-                '${_endTime.hourOfPeriod.toString()}:$minute $period';
 
+            List<String> endTimeStringList = new List<String>();
+            for (var i = 0; i < endTimeList.length; i++) {
+              if (endTimeList[i].minute < 10) {
+                minute = '0${endTimeList[i].minute}';
+              } else {
+                minute = endTimeList[i].minute.toString();
+              }
+              period = endTimeList[i].hour > 12 ? 'PM' : 'AM';
+              endTime = '${endTimeList[i].hourOfPeriod.toString()}:$minute $period';
+
+              endTimeStringList.add(endTime);
+            }
             // Random 5 digit number for document ID
             var rand = new Random();
             int idNum = 10000 + rand.nextInt(89999);
@@ -276,15 +299,23 @@ class AddClassPageState extends State<AddClassPage> {
                 price.toString() +
                 idNum.toString();
 
+            List<String> instructorList = new List<String>();
+            for (var i = 0; i < instructorControllerList.length; i++) {
+              instructorList.add(instructorControllerList[i].text);
+            }
+
+            int instructorNum = instructorList.length;
+
             org = {
               'id': documentID,
               'title': title,
-              'instructor': instructor,
+              'instructorList': instructorList,
+              'instructorNum': instructorNum,
               'location': location,
               'price': price,
               'date': date,
-              'startTime': startTime,
-              'endTime': endTime,
+              'startTimeList': startTimeStringList,
+              'endTimeList': endTimeStringList,
             };
 
             Firestore.instance
@@ -296,6 +327,23 @@ class AddClassPageState extends State<AddClassPage> {
           },
         ),
       ),
+    );
+  }
+
+  TimeOfDay newTime(TimeOfDay currentTime) {
+    int newHour, newMinute;
+    if (currentTime.minute >= 30) {
+      newMinute = currentTime.minute - 30;
+      newHour = currentTime.hour + 2;
+    } else {
+      newMinute = currentTime.minute + 30;
+      newHour = currentTime.hour + 1;
+    }
+    print(newHour);
+    print(newMinute);
+    return new TimeOfDay(
+      hour: newHour,
+      minute: newMinute,
     );
   }
 }

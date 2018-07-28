@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ClassPage extends StatelessWidget {
-  final DocumentSnapshot documentSnapshot;
+  final String documentID;
 
-  ClassPage({this.documentSnapshot});
+  ClassPage({this.documentID});
   
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ClassPage extends StatelessWidget {
       body: Container(
         child: Center(
           child: Text(
-            documentSnapshot['title'],
+            documentID,
           )
         ),
       ),

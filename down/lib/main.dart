@@ -1,11 +1,13 @@
 import 'package:down/colors.dart';
 import 'package:down/pages/add_class_page.dart';
 import 'package:down/pages/feed_page.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
