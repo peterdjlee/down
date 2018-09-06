@@ -9,11 +9,11 @@ Down is a cross-platform mobile app that helps users find local dance classes ea
 
 ## Authors
 
-* **Peter Lee**
+**Peter Lee**
 
 ## Notes
 This app is currently undergoing prototype development.
 
 ## Screenshots
-![Main page screenshot](down/assets/images/down_screenshot_main)
-![Add class page screenshot](down/assets/images/down_screenshot_add_class)
+<img src="/down/assets/images/down_screenshot_main.jpg" alt="Main page screenshot" width="300"/> 
+<img src="/down/assets/images/down_screenshot_add_class.jpg" alt="Add class page screenshot" width="300"/>
