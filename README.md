@@ -10,8 +10,8 @@ Down is a cross-platform mobile app that helps users find local dance classes ea
 * Browse through classes using filters such as location, price, teachers, or organizations.
 
 ## Built With
-* [Flutter](https://flutter.io/) - The cross-platform mobile app development framework used
-* [Firebase](https://firebase.google.com/docs/firestore/) - Used to store class and user data
+* [Flutter](https://flutter.io/) - The cross-platform mobile app development framework used.
+* [Firestore](https://firebase.google.com/docs/firestore/) - A NoSQL database used to store class and user data.
 
 ## Authors
 Peter Lee
